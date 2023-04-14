@@ -1,0 +1,126 @@
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "GrantedHub",
+   LoadingTitle = "GrantedHub V2",
+   LoadingSubtitle = "by xin<3#0001",
+   ConfigurationSaving = {
+      Enabled = false,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Big Hub"
+   },
+   Discord = {
+      Enabled = true,
+      Invite = "https://discord.gg/FjWhzt2b44", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD.
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = true, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "GrantedHub",
+      Subtitle = "Enter The Key!",
+      Note = "This is only made for fun no scamming intended whatsoever",
+      FileName = "SiriusKey",
+      SaveKey = false,
+      GrabKeyFromSite = false, 
+      Key = "QW2b4b7h2a1"
+   }
+})
+Rayfield:Notify({
+   Title = "Made By xin<3#0001",
+   Content = "Dm me if the script is patched",
+   Duration = 3.5,
+   Image = 7866490119,
+   Actions = { -- Notification Buttons
+      Ignore = {
+         Name = "alright!",
+         Callback = function()
+         print("xin the best!")
+      end
+   },
+},
+})
+
+
+local Tab = Window:CreateTab("Fake Pet!", 10180628683) -- Title, Image
+
+local Section = Tab:CreateSection("Pet")
+
+local Label = Tab:CreateLabel("Pet Scam")
+
+
+
+local Input = Tab:CreateInput({
+   Name = "Pet Name",
+   PlaceholderText = "Input The pet name",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+         local playerName = game.Players.LocalPlayer.Name
+        local petName = Text
+
+        local player = game.Players:FindFirstChild(playerName)
+        if player then
+            local petsFolder = player.Pets
+            if petsFolder then
+                for _, pet in ipairs(petsFolder:GetChildren()) do
+                    local nameValue = pet:FindFirstChild("_Name")
+                    if nameValue and nameValue:IsA("StringValue") and nameValue.Value == petName then
+                        petParent = nameValue.Parent.Name 
+                        print(petParent)
+                        
+                        Rayfield:Notify({
+                            Title = "Pet ID Found!",
+                            Content = "The Pet Id is    " .. petParent,
+                            Duration = 1.5,
+                            Image = 10316507030,
+                            Actions = { -- Notification Buttons
+                                Ignore = {
+                                    Name = "Nice!",
+                                    Callback = function()
+                                        print("the parent has  been  found")
+                                    end
+                                },
+                            },
+                        })
+                        break 
+                    end
+                end
+            end
+        end
+    end,
+})
+ 
+
+
+
+
+local Input = Tab:CreateInput({
+    Name = "Pet's NR",
+    PlaceholderText = "How many copies of the same pet",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Text)
+        local inputNum = tonumber(Text)
+        local redo = false
+        if Text:lower() == "-1" then
+            redo = true
+        elseif inputNum and inputNum >= 1 and inputNum <= 8 then
+            redo = false
+            local args = {
+                [1] = "Add",
+                [2] = ""..petParent.. "" ,
+            }
+            for i = 1, inputNum do
+                game:GetService("ReplicatedStorage"):WaitForChild("TradeRemotes"):WaitForChild("TradeRemote"):FireServer(unpack(args))
+            end
+        end
+        
+        if redo then
+            local args = {
+                [1] = "Unadd",
+                [2] = ""..petParent.. "" ,
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("TradeRemotes"):WaitForChild("TradeRemote"):FireServer(unpack(args))
+        end
+    end,
+ 
+})
+local Paragraph = Tab:CreateParagraph({Title = "Warning!", Content = "this is made for fun not for scamming!"})
